@@ -45,26 +45,26 @@
 
 	<body>
 		<div class="container">
-			<div class="mt-4 p-5 bg-info text-white rounded">
+			<div class="mt-4 p-5 bg-info text-white rounded col-sm">
 				<h1>DEPT LIST</h1>
 			</div>
 			
-			<table class="table table-striped table-hover">
-				<tr>
-					<th>부서 번호</th>
-					<th>부서 이름</th>
-					<th>수정</th>
-					<th>삭제</th>
+			<table class="table table-striped table-hover text-center">
+				<tr class="">
+					<th class="col-sm-2">부서 번호</th>
+					<th class="col-sm-6">부서 이름</th>
+					<th class="col-sm-2">수정</th>
+					<th class="col-sm-2">삭제</th>
 				</tr>
 					<!-- 부서 목록 출력(부서번호 내림차순) -->
 				<%
 					for(Department d : list) { // Java에서 제공하는 foreach문
 				%>
 						<tr>
-							<td><%=d.deptNo %></td>
-							<td><%=d.deptName %></td>
-							<td><a href="" class="badge bg-primary">수정</a></td>
-							<td><a href="" class="badge bg-danger">삭제</a></td>
+							<td class="col-sm-2"><%=d.deptNo %></td>
+							<td class="col-sm-6"><%=d.deptName %></td>
+							<td class="col-sm-2"><a href="<%=request.getContextPath()%>/dept/updateDeptForm.jsp?deptNo=<%=d.deptNo %>" class="btn btn-success text-white btn-sm">수정</a></td>
+							<td class="col-sm-2"><a href="<%=request.getContextPath()%>/dept/deleteDept.jsp?deptNo=<%=d.deptNo %>" class="btn btn-danger text-white btn-sm">삭제</a></td>
 						</tr>
 				<%		
 					}

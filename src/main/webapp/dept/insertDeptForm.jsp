@@ -16,10 +16,38 @@
 
 	<body>
 		<div class="container">
-			<div class="mt-4 p-5 bg-secondary text-white rounded">
+			<div class="mt-4 p-5 bg-secondary text-white rounded col-sm">
 				<h1>DEPT FORM</h1>
 			</div>
-		
+			<form action="<%=request.getContextPath()%>/dept/insertDeptAction.jsp" method="post">
+				<table class="table table-striped table-hover text-center">
+					<tr>
+						<td colspan="2">
+							<div class="">부서 추가</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>부서 번호</span></td>
+						<td>
+							<input type="text" name="deptNo" value="" placeholder="ex)k007">
+						</td>
+					</tr>
+					
+					<tr>
+						<td><span>부서 명</span></td>
+						<td><input type="text" name="deptName" value=""></td>
+					</tr>
+					
+					<tr>
+						<th colspan="2">
+							<button type="submit" class="btn btn-secondary text-white">INSERT</button>
+							<a href="<%=request.getContextPath()%>/dept/deptlist.jsp" class="btn btn-info text-white">Back</a>
+						</th>
+					</tr>
+					
+				</table>
+			</form>
 		</div>
 	</body>
 </html>
