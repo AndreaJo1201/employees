@@ -7,15 +7,15 @@
 <%
 	//1. 요청 분석
 	String deptNo = request.getParameter("deptNo");
-	System.out.println("deptNo:"+deptNo);
+	System.out.println("deptNo:"+deptNo); // deptNo get consol print : debuging
 	
 
 	//2. 요청 처리
 	Class.forName("org.mariadb.jdbc.Driver");
-	System.out.println("jdbc Driver Loading Complete!");
+	System.out.println("jdbc Driver Loading Complete!"); // driver debuging
 	
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
-	System.out.println("DB Connection ... Complete!");
+	System.out.println("DB Connection ... Complete!"); // db connection debuging
 	
 	String sql = "SELECT dept_no deptNo, dept_name deptName FROM departments WHERE dept_no = ?";
 	PreparedStatement stmt = conn.prepareStatement(sql);
@@ -30,8 +30,8 @@
 		System.out.println("deptName:"+deptName);
 	}
 	
-	System.out.println("UPDATE deptNo :"+deptNo);
-	System.out.println("UPDATE deptName :"+deptName);
+	System.out.println("UPDATE deptNo :"+deptNo); // deptNo check
+	System.out.println("UPDATE deptName :"+deptName); // deptName check
 	
 	
 %>

@@ -9,14 +9,14 @@
 	
 	//2. 업무 처리(Model) -> 모델데이터(단일값 or 자료구조형태(배열, list, ...))
 	Class.forName("org.mariadb.jdbc.Driver"); // DB Driver loading...
-	System.out.println("Driver loading complete!!");
+	System.out.println("Driver loading complete!!"); //driver debuging
 	
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234"); // DB connection..
-	System.out.println("DB Connection... Complete!!");
+	System.out.println("DB Connection... Complete!!"); //conn debuging
 	
 	String sql = "SELECT dept_no deptNo, dept_name deptName FROM departments ORDER BY dept_no ASC";
 	PreparedStatement stmt = conn.prepareStatement(sql);
-	System.out.println("PreparedStatement : "+sql);
+	System.out.println("PreparedStatement : "+sql); // stmt debuging
 	
 	ResultSet rs = stmt.executeQuery();
 	// <-- 모델 데이터 ResultSet은 보편적인 타입X

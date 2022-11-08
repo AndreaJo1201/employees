@@ -16,15 +16,15 @@
 	// 1. 요청 분석
 	String deptNo = request.getParameter("deptNo");
 	String deptName = request.getParameter("deptName");
-	System.out.println(deptNo + " <- getParameter : deptNo");
-	System.out.println(deptName + " <- getParameter : deptName");
+	System.out.println(deptNo + " <- getParameter : deptNo"); // deptNo check
+	System.out.println(deptName + " <- getParameter : deptName"); //deptName check
 	
 	// 2. 요청 처리
 	Class.forName("org.mariadb.jdbc.Driver");
-	System.out.println("jdbc Driver Loading Complete!");
+	System.out.println("jdbc Driver Loading Complete!"); // driver loading debuging
 	
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
-	System.out.println("DB Connection... Complete!");
+	System.out.println("DB Connection... Complete!"); // DB connection check debuging
 	
 	String sql = "INSERT INTO departments (dept_no, dept_name) Values(?, ?)";
 	PreparedStatement stmt = conn.prepareStatement(sql);
@@ -32,15 +32,15 @@
 	stmt.setString(1,deptNo);
 	stmt.setString(2,deptName);
 	
-	System.out.println("Insert dept_name : "+deptName);
-	System.out.println("Insert dept_no : "+deptNo);
+	System.out.println("Insert dept_name : "+deptName); // insert name check
+	System.out.println("Insert dept_no : "+deptNo); // insert no check
 	
 	int row = stmt.executeUpdate();
 	
-	if(row == 1) {
-		System.out.println("Update Complete!");
+	if(row == 1) { // result check
+		System.out.println("Insert Complete!");
 	} else {
-		System.out.println("Update False...");
+		System.out.println("Insert False...");
 	}
 	
 	

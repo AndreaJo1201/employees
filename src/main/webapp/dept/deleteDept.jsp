@@ -11,17 +11,17 @@
 
 	// 2. 요청 처리
 	Class.forName("org.mariadb.jdbc.Driver");
-	System.out.println("jdbc Driver Loading Complete!");
+	System.out.println("jdbc Driver Loading Complete!"); // driver loading debuging
 	
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/employees","root","java1234");
-	System.out.println("DB Connection... Complete!");
+	System.out.println("DB Connection... Complete!"); // db connection debuging
 	
 	String sql = "DELETE FROM departments WHERE dept_no = ?";
-	System.out.println("Delete : deptNo = "+deptNo);
+	System.out.println("Delete : deptNo = "+deptNo); // deptNo check
 	
 	PreparedStatement stmt = conn.prepareStatement(sql);
 	stmt.setString(1,deptNo);
-	System.out.println("stmt set complete deptNo : "+sql);
+	System.out.println("stmt set complete deptNo : "+sql); // query check debuging
 	
 	int row = stmt.executeUpdate();
 	
