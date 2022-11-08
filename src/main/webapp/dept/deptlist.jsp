@@ -73,8 +73,8 @@
 			
 			<div>
 				<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp" class="btn btn-secondary text-white btn-lg">부서 추가</a>
+				<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
 			</div>
-			
 		</div>	
 	</body>
 </html>
