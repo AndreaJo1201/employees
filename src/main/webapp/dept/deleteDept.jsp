@@ -7,6 +7,7 @@
 
 <%
 	// 1. 요청 분석
+	System.out.println("--------------------------------DELETELIST--------------------------------");
 	String deptNo = request.getParameter("deptNo");
 
 	// 2. 요청 처리
@@ -30,6 +31,7 @@
 	} else {
 		System.out.println("Delete False ...");
 	}
+	System.out.println("--------------------------------------------------------------------------");
 	
 	response.sendRedirect(request.getContextPath()+"/dept/deptlist.jsp");
 %>

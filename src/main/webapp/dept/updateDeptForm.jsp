@@ -6,6 +6,7 @@
 
 <%
 	//1. 요청 분석
+	System.out.println("--------------------------------UPDATELIST--------------------------------");
 	String deptNo = request.getParameter("deptNo");
 	System.out.println("deptNo:"+deptNo); // deptNo get consol print : debuging
 	
@@ -32,6 +33,7 @@
 	
 	System.out.println("UPDATE deptNo :"+deptNo); // deptNo check
 	System.out.println("UPDATE deptName :"+deptName); // deptName check
+	System.out.println("--------------------------------------------------------------------------");
 	
 	
 %>

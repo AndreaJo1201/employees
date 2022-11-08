@@ -14,6 +14,7 @@
 	}
 
 	// 1. 요청 분석
+	System.out.println("--------------------------------INSERTLIST--------------------------------");
 	String deptNo = request.getParameter("deptNo");
 	String deptName = request.getParameter("deptName");
 	System.out.println(deptNo + " <- getParameter : deptNo"); // deptNo check
@@ -42,6 +43,7 @@
 	} else {
 		System.out.println("Insert False...");
 	}
+	System.out.println("--------------------------------------------------------------------------");
 	
 	
 	// 3. 결과 출력

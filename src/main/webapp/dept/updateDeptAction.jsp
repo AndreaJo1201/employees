@@ -29,6 +29,7 @@
 	} else {
 		System.out.println("UPDATE False...");
 	}
+	System.out.println("--------------------------------------------------------------------------");
 	
 	response.sendRedirect(request.getContextPath()+"/dept/deptlist.jsp");
 %>

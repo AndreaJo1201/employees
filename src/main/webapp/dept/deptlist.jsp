@@ -8,6 +8,7 @@
 	//1. 요청 분석(Controller)
 	
 	//2. 업무 처리(Model) -> 모델데이터(단일값 or 자료구조형태(배열, list, ...))
+	System.out.println("--------------------------------DEPTLIST--------------------------------");
 	Class.forName("org.mariadb.jdbc.Driver"); // DB Driver loading...
 	System.out.println("Driver loading complete!!"); //driver debuging
 	
@@ -29,6 +30,7 @@
 		list.add(d);
 		
 	}
+	System.out.println("------------------------------------------------------------------------");
 	
 	//3. 출력(View) -> 모델데이터를 고객이 원하는 형태로 출력 -> 뷰(리포트)
 	
