@@ -2,7 +2,10 @@
 <%request.setCharacterEncoding("UTF-8"); %>
 
 <%
-
+	if(request.getParameter("msg") != null) {
+		String msg = request.getParameter("msg");
+		out.println("<script>alert('"+msg+"');</script>");
+	}
 %>
 
 <!DOCTYPE html>
@@ -22,9 +25,9 @@
 			<form action="<%=request.getContextPath()%>/dept/insertDeptAction.jsp" method="post">
 				<table class="table table-striped table-hover text-center">
 					<tr>
-						<td colspan="2">
+						<th colspan="2">
 							<div class="">부서 추가</div>
-						</td>
+						</th>
 					</tr>
 					
 					<tr>

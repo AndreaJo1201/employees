@@ -5,6 +5,12 @@
 <%request.setCharacterEncoding("UTF-8"); %>
 
 <%
+
+	if(request.getParameter("msg") != null) {
+		String msg = request.getParameter("msg");
+		out.println("<script>alert('"+msg+"');</script>");
+	}
+
 	//1. 요청 분석(Controller)
 	
 	//2. 업무 처리(Model) -> 모델데이터(단일값 or 자료구조형태(배열, list, ...))
@@ -50,6 +56,9 @@
 			<div class="mt-4 p-5 bg-info text-white rounded col-sm">
 				<h1>DEPT LIST</h1>
 			</div>
+			<div>
+				<jsp:include page="/inc/menu.jsp"></jsp:include>
+			</div>
 			
 			<table class="table table-striped table-hover text-center">
 				<tr class="">
@@ -73,6 +82,7 @@
 				%>
 			</table>
 			
+			<!-- 메뉴 prtial jsp 구성 -->
 			<div>
 				<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp" class="btn btn-secondary text-white btn-lg">부서 추가</a>
 				<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>

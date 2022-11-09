@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("UTF-8"); %>
 <%@ page import="java.sql.*" %>
@@ -5,10 +6,19 @@
 <%@ page import ="java.util.*" %>
 
 <%
+
+
 	//1. 요청 분석
 	System.out.println("--------------------------------UPDATELIST--------------------------------");
 	String deptNo = request.getParameter("deptNo");
 	System.out.println("deptNo:"+deptNo); // deptNo get consol print : debuging
+	
+	if(deptNo == null) { // updateDeptForm.jsp 주소창에 직접 호출하면 deptNo은 null 값임.
+		System.out.println("--------------------------------------------------------------------------");
+		String msg = request.getParameter("msg");
+		response.sendRedirect(request.getContextPath()+"/dept/deptlist.jsp?msg="+URLEncoder.encode(msg,"UTF-8"));
+		return;
+	}
 	
 
 	//2. 요청 처리
