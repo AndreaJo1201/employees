@@ -8,21 +8,26 @@
 	//1. 요청 처리
 	//페이지 알고리즘
 	int currentPage = 1;
-	int msg = 1;
-	if(request.getParameter("currentPage") != null) {
-		msg = Integer.parseInt(request.getParameter("currentPage"));
-		currentPage = Integer.parseInt(request.getParameter("currentPage"));	
+	if(request.getParameter("currentPage") != null) { // 페이지 번호
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		System.out.println("currentPage->request.getParameter() = "+currentPage);
 	}
 	
 	//2. 요청 분석 
 	int rowPerPage = 10; // 한 페이지당 출력할 데이터의 개수
+	System.out.println("--------------------------------EMP_LIST--------------------------------");
 	
 	Class.forName("org.mariadb.jdbc.Driver");
+	System.out.println("Driver loading complete!!"); //driver debuging
+	
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
+	System.out.println("DB Connection... Complete!!"); //conn debuging
 	
 	//lastPage 
 	String countSql = "SELECT COUNT(*) FROM employees";
 	PreparedStatement countStmt = conn.prepareStatement(countSql);
+	System.out.println("PreparedStatement : "+countSql); // stmt debuging
+	
 	ResultSet countRs = countStmt.executeQuery();
 	int count = 0;
 	if(countRs.next()) {
@@ -34,14 +39,16 @@
 		lastPage = lastPage + 1;
 	}
 	
-	if(msg > lastPage) {
+	if(currentPage > lastPage) { // 페이지를 넘어선 다른 수를 입력했을 때 예외(에러) 처리
 		String stringMsg = "존재하지 않는 페이지입니다.";
-		out.println("<script>alert('"+stringMsg+"');</script>");
+		out.println("<script>alert('"+stringMsg+"');</script>"); // 스크립트 alert(경고메시지) 출력
 		currentPage = lastPage;
-	} else if(msg < 1) {
+		System.out.println("go to lastPage");
+	} else if(currentPage < 1) {
 		String stringMsg = "존재하지 않는 페이지입니다.";
 		out.println("<script>alert('"+stringMsg+"');</script>");
 		currentPage = 1;
+		System.out.println("go to firstPage");
 	}
 	
 	//페이지당 출력할 emp 목록
@@ -59,6 +66,7 @@
 		e.lastName = empRs.getString("lastName");
 		empList.add(e);
 	}
+	System.out.println("------------------------------------------------------------------------");
 %>
 
 <!DOCTYPE html>
