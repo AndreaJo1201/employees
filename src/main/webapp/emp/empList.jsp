@@ -8,7 +8,9 @@
 	//1. 요청 처리
 	//페이지 알고리즘
 	int currentPage = 1;
+	int msg = 1;
 	if(request.getParameter("currentPage") != null) {
+		msg = Integer.parseInt(request.getParameter("currentPage"));
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));	
 	}
 	
@@ -31,6 +33,32 @@
 	if(count % rowPerPage != 0) {
 		lastPage = lastPage + 1;
 	}
+	
+	if(msg > lastPage) {
+		String stringMsg = "존재하지 않는 페이지입니다.";
+		out.println("<script>alert('"+stringMsg+"');</script>");
+		currentPage = lastPage;
+	} else if(msg < 1) {
+		String stringMsg = "존재하지 않는 페이지입니다.";
+		out.println("<script>alert('"+stringMsg+"');</script>");
+		currentPage = 1;
+	}
+	
+	//페이지당 출력할 emp 목록
+	String empSql ="SELECT emp_no empNo, first_name firstName, last_name lastName FROM employees ORDER BY emp_no ASC LIMIT ?, ?";
+	PreparedStatement empStmt = conn.prepareStatement(empSql);
+	empStmt.setInt(1,rowPerPage*(currentPage-1));
+	empStmt.setInt(2,rowPerPage);
+	ResultSet empRs = empStmt.executeQuery();
+	
+	ArrayList<Employee> empList = new ArrayList<Employee>();
+	while(empRs.next()) {
+		Employee e = new Employee();
+		e.empNo = empRs.getInt("empNo");
+		e.firstName = empRs.getString("firstName");
+		e.lastName = empRs.getString("lastName");
+		empList.add(e);
+	}
 %>
 
 <!DOCTYPE html>
@@ -52,26 +80,48 @@
 			</div>
 
 			<!-- 부서별 사원 목록 출력 -->
-			<table>
-			
+			<table class="table table-striped table-hover text-center">
+				<tr>
+					<th class="col-sm-2">사원 번호</th>
+					<th class="col-sm-5">firstName</th>
+					<th class="col-sm-5">lastName</th>
+				</tr>
+				<%
+					for(Employee e : empList) {
+				%>
+						<tr>
+							<td class="col-sm-2"><%=e.empNo%></td>
+							<td class="col-sm-5"><%=e.firstName%></td>
+							<td class="col-sm-5"><%=e.lastName%></td>
+						</tr>
+				<%		
+					}
+				%>
 			</table>
+			<div class="text-center">
+				<form action="<%=request.getContextPath()%>/emp/empList.jsp" method="post" class="text-center">
+					<input type="text" name="currentPage" value="" placeholder="이동하려는 page 번호" style="width:200px" class="text-center">
+					<button class="btn btn-dark" type="submit">이동</button>
+				</form>
+			</div>
+			
 
 			
-			<div>현재 페이지 : <%=currentPage %> / <%=lastPage %></div>
+			<div class="text-center">Page No : <%=currentPage %> / <%=lastPage %></div>
 			
 			<!-- paging code -->
-			<div>
+			<div class="text-center">
 				<%
 					if(currentPage>1) {
 				%>
-						<a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=1">처음으로</a>
-						<a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=1">처음으로</a>
+						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage-1%>">이전</a>
 				<%
 					}
 					if(currentPage<lastPage) {
 				%>
-						<a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage+1%>">다음</a>
-						<a href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=lastPage%>">끝으로</a>
+						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage+1%>">다음</a>
+						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=lastPage%>">끝으로</a>
 				<%		
 					}
 				%>
