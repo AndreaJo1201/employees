@@ -28,6 +28,7 @@
 				<ul class="list-group list-group-numbered">
 					<li><a href="<%=request.getContextPath()%>/dept/deptlist.jsp" class="list-group-item list-group-item-action">부서 관리</a></li>
 					<li><a href="<%=request.getContextPath()%>/emp/empList.jsp" class="list-group-item list-group-item-action">사원 목록</a></li>
+					<li><a href="<%=request.getContextPath()%>/board/boardList.jsp" class="list-group-item list-group-item-action">게시판 관리</a></li>
 				</ul>
 			</div>
 		</div>

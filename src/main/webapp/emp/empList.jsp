@@ -81,7 +81,7 @@
 	<body>
 		<div class="container">
 			<div class="mt-4 p-5 bg-info text-white rounded">
-				<h1>사원목록</h1>
+				<h1>EMPLOYEES LIST</h1>
 			</div>
 			<div>
 				<jsp:include page="/inc/menu.jsp"></jsp:include>
@@ -106,33 +106,48 @@
 					}
 				%>
 			</table>
+			
+			
+
+			
+			<div class="d-flex justify-content-between">
+				
+				<div>
+					<a href="<%=request.getContextPath()%>/emp/insertEmpForm.jsp" class="btn btn-secondary text-white btn-lg text-end">사원 추가</a>
+				</div>
+				
+				<!-- paging code -->
+				<div class="text-center">
+					<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=1">처음</a>
+					<%
+						if(currentPage>1) {
+					%>
+							<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+					<%
+						}
+					%>
+					<span style="text-align:center" class="text-center"><%=currentPage %> / <%=lastPage %></span>
+					<%
+						if(currentPage<lastPage) {
+					%>
+							<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage+1%>">다음</a>
+					<%		
+						}
+					%>
+					<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=lastPage%>">끝</a>
+				</div>
+				
+				<div>
+					<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
+				</div>
+					
+			</div>
+			
 			<div class="text-center">
 				<form action="<%=request.getContextPath()%>/emp/empList.jsp" method="post" class="text-center">
 					<input type="text" name="currentPage" value="" placeholder="이동하려는 page 번호" style="width:200px" class="text-center">
 					<button class="btn btn-dark" type="submit">이동</button>
 				</form>
-			</div>
-			
-
-			
-			<div class="text-center">Page No : <%=currentPage %> / <%=lastPage %></div>
-			
-			<!-- paging code -->
-			<div class="text-center">
-				<%
-					if(currentPage>1) {
-				%>
-						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=1">처음으로</a>
-						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage-1%>">이전</a>
-				<%
-					}
-					if(currentPage<lastPage) {
-				%>
-						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=currentPage+1%>">다음</a>
-						<a class="btn btn-light" href="<%=request.getContextPath()%>/emp/empList.jsp?currentPage=<%=lastPage%>">끝으로</a>
-				<%		
-					}
-				%>
 			</div>
 			
 		</div>

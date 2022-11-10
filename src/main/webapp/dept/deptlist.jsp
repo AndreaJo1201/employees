@@ -83,9 +83,13 @@
 			</table>
 			
 			<!-- 메뉴 prtial jsp 구성 -->
-			<div>
-				<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp" class="btn btn-secondary text-white btn-lg">부서 추가</a>
-				<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
+			<div class="d-flex justify-content-between">
+				<div>
+					<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp" class="btn btn-secondary text-white btn-lg">부서 추가</a>
+				</div>
+				<div>
+					<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
+				</div>
 			</div>
 		</div>	
 	</body>
