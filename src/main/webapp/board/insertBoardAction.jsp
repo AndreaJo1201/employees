@@ -49,14 +49,17 @@
 	System.out.println("Insert board_pw : "+boardPw);
 	
 	int row = insStmt.executeUpdate();
+	String msg =null;
 	
 	if(row == 1) {
 		System.out.println("Insert Complete");
+		msg = "작성 완료";
 	} else {
 		System.out.println("Insert False...");
+		msg = "ERROR! 작성 실패!";
 	}
 	System.out.println("---------------------------------------------------------------------------");
 	
 	//3. 결과 출력
-	response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
+	response.sendRedirect(request.getContextPath()+"/board/boardList.jsp?&msg="+URLEncoder.encode(msg,"UTF-8"));
 %>

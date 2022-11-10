@@ -5,12 +5,12 @@
 <%@ page import="java.util.*" %>
 
 <%
-	/*
+	
 	if(request.getParameter("msg") != null) {
 		String msg = request.getParameter("msg");
 		out.println("<script>alert('"+msg+"');</script>");
 	}
-	*/
+	
 %>
 
 <%
