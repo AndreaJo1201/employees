@@ -39,7 +39,7 @@
 					
 					<tr>
 						<td class="col-sm-1 text-center text-align-center">내용</td>
-						<td class="col-sm-11"><textarea rows="5" cols="130" name="boardContent" placeholder="내용을 입력해주세요."></textarea></td>
+						<td class="col-sm-11"><textarea rows="5" cols="135" name="boardContent" placeholder="내용을 입력해주세요."></textarea></td>
 					</tr>
 					
 					<tr>

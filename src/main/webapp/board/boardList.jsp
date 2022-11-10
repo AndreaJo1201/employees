@@ -5,6 +5,15 @@
 <%@ page import="java.util.*" %>
 
 <%
+	/*
+	if(request.getParameter("msg") != null) {
+		String msg = request.getParameter("msg");
+		out.println("<script>alert('"+msg+"');</script>");
+	}
+	*/
+%>
+
+<%
 	//1. 요청 분석
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
@@ -13,7 +22,6 @@
 	
 	//2. 요청 처리
 	final int ROW_PER_PAGE = 10; // 페이지당 출력할 데이터의 개수
-	int beginRow = ROW_PER_PAGE * (currentPage-1); //LIMIT beginRow, ROW_PER_PAGE;
 	
 	System.out.println("--------------------------------BOARD_LIST--------------------------------");
 	
@@ -33,7 +41,26 @@
 	}
 	
 	//올림 시 double 형태로 반환
-	int lastPage = (int)Math.ceil((double)cnt / (double)ROW_PER_PAGE);
+	//int lastPage = (int)Math.ceil((double)cnt / (double)ROW_PER_PAGE);
+	int lastPage = cnt / ROW_PER_PAGE;
+	if(cnt % ROW_PER_PAGE != 0) {
+		lastPage = lastPage + 1;
+	}
+	
+	if(currentPage > lastPage) { // 페이지를 넘어선 다른 수를 입력했을 때 예외(에러) 처리
+		String stringMsg = "존재하지 않는 페이지입니다.";
+		out.println("<script>alert('"+stringMsg+"');</script>"); // 스크립트 alert(경고메시지) 출력
+		currentPage = lastPage;
+		System.out.println("go to lastPage");
+		
+	} else if(currentPage < 1) {
+		String stringMsg = "존재하지 않는 페이지입니다.";
+		out.println("<script>alert('"+stringMsg+"');</script>");
+		currentPage = 1;
+		System.out.println("go to firstPage");
+	}
+	
+	int beginRow = ROW_PER_PAGE * (currentPage-1); //LIMIT beginRow, ROW_PER_PAGE;
 	
 	//리스트 부르기
 	String listSql = "SELECT board_no boardNo, board_title boardTitle FROM board ORDER BY board_no ASC LIMIT ?, ?";
@@ -49,6 +76,8 @@
 		b.boardTitle = listRs.getString("boardTitle");
 		boardList.add(b);
 	}
+	
+
 	
 	//3. 출력
 
@@ -77,8 +106,8 @@
 			
 			<table class="table table-striped table-hover text-center table-bordered">
 				<tr>
-					<th class="col-sm-2">제목</th>
-					<th class="col-sm-10">내용</th>
+					<th class="col-sm-1">번호</th>
+					<th class="col-sm-11">제목</th>
 				</tr>
 				
 				<%
