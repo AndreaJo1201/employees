@@ -63,11 +63,10 @@
 		System.out.println("--------------------------------------------------------------------------");
 		String msg = "수정되었습니다.";
 		response.sendRedirect(request.getContextPath()+"/board/boardList.jsp?&msg="+URLEncoder.encode(msg,"UTF-8"));
-		
+		return;
 	} else {
 		String msg = "비밀번호가 일치하지 않습니다.";
 		response.sendRedirect(request.getContextPath()+"/board/updateBoardForm.jsp?boardNo="+URLEncoder.encode(boardNo, "UTF-8")+"&msg="+URLEncoder.encode(msg,"UTF-8"));
-		return;
 	}
 	
 %>

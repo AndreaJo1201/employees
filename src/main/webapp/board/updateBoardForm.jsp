@@ -71,7 +71,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 		<title>UPDATE BOARD FORM</title>
 	</head>
-
+	
+	<body>
 	<div class="container">
 		<div class="mt-4 p-5 bg-success text-white rounded col-sm">
 			<h1>UPDATE BOARD FORM</h1>
@@ -86,7 +87,7 @@
 				</tr>
 				<tr>
 					<td class="col-sm-1 text-center"><span>번호</span></td>
-					<td class="col-sm-1">
+					<td class="col-sm-11">
 						<input type="text" name="boardNo" value="<%=boardNo%>" readonly="readonly">
 					</td>
 				</tr>
@@ -139,6 +140,5 @@
 		</div>
 	
 	</div>
-		
 	</body>
 </html>

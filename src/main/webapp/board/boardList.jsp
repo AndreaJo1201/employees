@@ -10,15 +10,19 @@
 		String msg = request.getParameter("msg");
 		out.println("<script>alert('"+msg+"');</script>");
 	}
+
+	String word = request.getParameter("word");
 	
 %>
 
 <%
 	//1. 요청 분석
 	int currentPage = 1;
-	if(request.getParameter("currentPage") != null) {
+	System.out.println(request.getParameter("currentPage"));
+	if(request.getParameter("currentPage") != null && !request.getParameter("currentPage").equals("")) {
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
+	System.out.println(currentPage);
 	
 	//2. 요청 처리
 	final int ROW_PER_PAGE = 10; // 페이지당 출력할 데이터의 개수
@@ -32,12 +36,25 @@
 	System.out.println("DB Connection... Complete!!"); //conn debuging
 	
 	//last page 구하기
-	String cntSql = "SELECT COUNT(*) cnt FROM board";
-	PreparedStatement cntStmt = conn.prepareStatement(cntSql);
+	String cntSql = null;
+	PreparedStatement cntStmt = null;
+	if(word == null) {
+		cntSql = "SELECT COUNT(*) cnt FROM board";
+		cntStmt = conn.prepareStatement(cntSql);
+	} else {
+		cntSql = "SELECT COUNT(*) cnt FROM board WHERE board_content LIKE ? OR board_title LIKE ?";
+		cntStmt = conn.prepareStatement(cntSql);
+		cntStmt.setString(1,"%"+word+"%");
+		cntStmt.setString(2,"%"+word+"%");
+	}
+	
 	ResultSet cntRs = cntStmt.executeQuery();
 	int cnt = 0;
 	if(cntRs.next()) {
 		cnt = cntRs.getInt("cnt");
+		if(cnt == 0) {
+			cnt = 1;
+		}
 	}
 	
 	//올림 시 double 형태로 반환
@@ -52,6 +69,9 @@
 		out.println("<script>alert('"+stringMsg+"');</script>"); // 스크립트 alert(경고메시지) 출력
 		currentPage = lastPage;
 		System.out.println("go to lastPage");
+			if(currentPage == 0){ // 존재하지 않는 검색어 입력시 page count 에러 처리를 위해
+				currentPage = 1;
+			}
 		
 	} else if(currentPage < 1) {
 		String stringMsg = "존재하지 않는 페이지입니다.";
@@ -61,12 +81,28 @@
 	}
 	
 	int beginRow = ROW_PER_PAGE * (currentPage-1); //LIMIT beginRow, ROW_PER_PAGE;
+	System.out.println(beginRow+"beginrow");
 	
 	//리스트 부르기
-	String listSql = "SELECT board_no boardNo, board_title boardTitle FROM board ORDER BY board_no ASC LIMIT ?, ?";
-	PreparedStatement listStmt = conn.prepareStatement(listSql);
-	listStmt.setInt(1, beginRow);
-	listStmt.setInt(2, ROW_PER_PAGE);
+	
+	
+	String listSql = null;
+	PreparedStatement listStmt = null;
+	if(word == null) {
+		listSql = "SELECT board_no boardNo, board_title boardTitle FROM board ORDER BY board_no ASC LIMIT ?, ?";
+		listStmt = conn.prepareStatement(listSql);
+		listStmt.setInt(1, beginRow);
+		listStmt.setInt(2, ROW_PER_PAGE);
+	} else {
+		listSql = "SELECT board_no boardNo, board_title boardTitle FROM board WHERE board_content LIKE ? OR board_title LIKE ? ORDER BY board_no ASC LIMIT ?, ?";
+		listStmt = conn.prepareStatement(listSql);
+		listStmt.setString(1, "%"+word+"%");
+		listStmt.setString(2, "%"+word+"%");
+		listStmt.setInt(3, beginRow);
+		listStmt.setInt(4, ROW_PER_PAGE);
+	}
+	
+	
 	ResultSet listRs = listStmt.executeQuery();
 	
 	ArrayList<Board> boardList = new ArrayList<Board>();
@@ -76,7 +112,6 @@
 		b.boardTitle = listRs.getString("boardTitle");
 		boardList.add(b);
 	}
-	
 
 	
 	//3. 출력
@@ -128,8 +163,10 @@
 			<!-- 페이징 -->
 			
 			<div>
-				
-				<div class="d-flex justify-content-between">
+			<%
+				if(word == null) {
+			%>
+			<div class="d-flex justify-content-between">
 					
 					<div>
 						<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp" class="btn btn-secondary text-white btn-lg text-end">게시글 작성</a>
@@ -144,7 +181,7 @@
 						<%
 							}
 						%>
-						<span style="text-align:center" class="text-center"><%=currentPage %> / <%=lastPage %></span>
+						<span style="text-align:center" class="text-center"><%=currentPage %> / <%=lastPage%></span>
 						<%
 							if(currentPage<lastPage) {
 						%>
@@ -159,12 +196,71 @@
 						<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
 					</div>
 					
-				</div>
-				
+				</div>	
+			<%
+				} else {
+			%>
+					<div class="d-flex justify-content-between">
+					
+						<div>
+							<a href="<%=request.getContextPath()%>/board/insertBoardForm.jsp" class="btn btn-secondary text-white btn-lg text-end">게시글 작성</a>
+						</div>
+					
+						<div>
+							<a class="btn btn-light" href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1&word=<%=word%>">처음</a>
+							<%
+								if(currentPage>1) {
+							%>
+									<a class="btn btn-light" href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>">이전</a>
+							<%
+								}
+							%>
+							<span style="text-align:center" class="text-center"><%=currentPage %> / <%=lastPage%></span>
+							<%
+								if(currentPage<lastPage) {
+							%>
+									<a class="btn btn-light" href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>">다음</a>
+							<%
+								}
+							%>
+							<a class="btn btn-light" href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>&word=<%=word%>">끝</a>
+						</div>
+						
+						<div>
+							<a href="<%=request.getContextPath()%>/index.jsp" class="btn btn-primary text-white btn-lg text-end">Back</a>
+						</div>
+					
+					</div>
+			<%
+				}
+			%>
+			<%	
+				if(word==null) {
+			%>
 				<div class="text-center">
 					<form action="<%=request.getContextPath()%>/board/boardList.jsp" method="post" class="text-center">
 						<input type="text" name="currentPage" value="" placeholder="이동하려는 page 번호" style="width:200px" class="text-center">
 						<button class="btn btn-dark" type="submit">이동</button>
+					</form>
+				</div>
+			<%	
+				} else {
+			%>
+					<div class="text-center">
+					<form action="<%=request.getContextPath()%>/board/boardList.jsp?&word=<%=word %>" method="post" class="text-center">
+						<input type="text" name="currentPage" value="" placeholder="이동하려는 page 번호" style="width:200px" class="text-center">
+						<button class="btn btn-dark" type="submit">이동</button>
+					</form>
+				</div>
+			<%
+				}
+			%>
+				
+				
+				<div class="text-center">
+					<form action="<%=request.getContextPath()%>/board/boardList.jsp" method="post" class="text-center">
+						<input type="text" name="word" value="" placeholder="검색 단어" style="width:200px" class="text-center" id="word">
+						<button class="btn btn-dark" type="submit">검색</button>
 					</form>
 				</div>
 				
