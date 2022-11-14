@@ -10,6 +10,18 @@
 	String commentPw = request.getParameter("commentPw");
 	String boardNo = request.getParameter("boardNo");
 	String currentPage = request.getParameter("currentPage");
+	
+	//제목, 내용, 비밀번호 미입력 또는 insertBoardAction.jsp로 강제로 넘어왔을 경우
+		//insertBoardAction.jsp로 이동
+		if(request.getParameter("boardNo") == null ||
+			request.getParameter("currentPage") == null ||
+			boardNo.equals("")||
+			currentPage.equals("")) {
+				String msg = "미 입력한 항목이 있습니다."; // GET방식으로 주소창에 문자열 encoding
+				System.out.println("---------------------------------------------------------------------------");
+				response.sendRedirect(request.getContextPath()+"/board/insertBoardForm.jsp?msg="+URLEncoder.encode(msg,"UTF-8"));
+				return;
+			}
 
 	if(commentContent == null || commentContent.equals("")) {
 		String msg = URLEncoder.encode("내용을 입력하세요.", "utf-8"); // get 방식 주소창에 문자열 인코딩 

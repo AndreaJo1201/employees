@@ -6,6 +6,14 @@
 <%@ page import ="java.util.*" %>
 
 <%
+	if(request.getParameter("msg") != null) {
+		String msg = request.getParameter("msg");
+		out.println("<script>alert('"+msg+"');</script>");
+	}
+
+%>
+
+<%
 
 
 	//1. 요청 분석
@@ -15,7 +23,7 @@
 	
 	if(deptNo == null) { // updateDeptForm.jsp 주소창에 직접 호출하면 deptNo은 null 값임.
 		System.out.println("--------------------------------------------------------------------------");
-		String msg = request.getParameter("msg");
+		String msg = "잘못된 접근 방식 입니다.";
 		response.sendRedirect(request.getContextPath()+"/dept/deptlist.jsp?msg="+URLEncoder.encode(msg,"UTF-8"));
 		return;
 	}
