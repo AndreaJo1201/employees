@@ -23,6 +23,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href ="<%=request.getContextPath()%>/board/boardList.jsp">[게시판관리]</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href ="<%=request.getContextPath()%>/salary/salaryList.jsp">[연봉관리]</a>
+			</li>
 		</ul>
 	</div>
 </nav>
