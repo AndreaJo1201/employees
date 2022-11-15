@@ -24,7 +24,16 @@
 				<a class="nav-link" href ="<%=request.getContextPath()%>/board/boardList.jsp">[게시판관리]</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href ="<%=request.getContextPath()%>/salary/salaryList.jsp">[연봉관리]</a>
+				<a class="nav-link" href ="<%=request.getContextPath()%>/salary/salaryList.jsp">[연봉관리(Class)]</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href ="<%=request.getContextPath()%>/salary/salaryMap.jsp">[연봉관리(HashMap)]</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href ="<%=request.getContextPath()%>/deptEmp/deptEmpList.jsp">[사원목록_부서기재(Class)]</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href ="<%=request.getContextPath()%>/deptEmp/deptEmpMap.jsp">[사원목록_부서기재(Map)]</a>
 			</li>
 		</ul>
 	</div>

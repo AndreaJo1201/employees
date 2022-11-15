@@ -29,7 +29,10 @@
 					<li><a href="<%=request.getContextPath()%>/dept/deptlist.jsp" class="list-group-item list-group-item-action">부서 관리</a></li>
 					<li><a href="<%=request.getContextPath()%>/emp/empList.jsp" class="list-group-item list-group-item-action">사원 목록</a></li>
 					<li><a href="<%=request.getContextPath()%>/board/boardList.jsp" class="list-group-item list-group-item-action">게시판 관리</a></li>
-					<li><a href="<%=request.getContextPath()%>/salary/salaryList.jsp" class="list-group-item list-group-item-action">연봉 관리</a></li>
+					<li><a href="<%=request.getContextPath()%>/salary/salaryList.jsp" class="list-group-item list-group-item-action">연봉 관리(Class)</a></li>
+					<li><a href="<%=request.getContextPath()%>/salary/salaryMap.jsp" class="list-group-item list-group-item-action">연봉 관리(HashMap)</a></li>
+					<li><a href="<%=request.getContextPath()%>/deptEmp/deptEmpList.jsp" class="list-group-item list-group-item-action">사원 목록(부서기재)(Class)</a></li>
+					<li><a href="<%=request.getContextPath()%>/deptEmp/deptEmpMap.jsp" class="list-group-item list-group-item-action">사원 목록(부서기재)(Map)</a></li>
 				</ul>
 			</div>
 		</div>
