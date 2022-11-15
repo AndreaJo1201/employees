@@ -43,10 +43,11 @@
 		cntSql = "SELECT COUNT(*) cnt FROM dept_emp";
 		cntStmt = conn.prepareStatement(cntSql);
 	} else {
-		cntSql = "SELECT COUNT(*) cnt FROM dept_emp de INNER JOIN employees e ON de.emp_no = e.emp_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? ";
+		cntSql = "SELECT COUNT(*) cnt FROM dept_emp de INNER JOIN employees e ON de.emp_no = e.emp_no INNER JOIN departments d ON de.dept_no = d.dept_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? OR d.dept_name LIKE ? ";
 		cntStmt = conn.prepareStatement(cntSql);
 		cntStmt.setString(1,"%"+word+"%");
 		cntStmt.setString(2,"%"+word+"%");
+		cntStmt.setString(3,"%"+word+"%");
 	}
 	
 	ResultSet cntRs = cntStmt.executeQuery();
@@ -91,12 +92,13 @@
 		stmt.setInt(1,beginRow);
 		stmt.setInt(2,ROW_PER_PAGE);
 	} else {
-		sql = "SELECT de.emp_no empNo, de.dept_no deptNo, d.dept_name deptName, e.first_name firstName, e.last_name lastName, de.from_date fromDate, de.to_date toDate FROM dept_emp de INNER JOIN employees e ON de.emp_no = e.emp_no INNER JOIN departments d ON de.dept_no = d.dept_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? ORDER BY de.emp_no ASC LIMIT ?, ?";
+		sql = "SELECT de.emp_no empNo, de.dept_no deptNo, d.dept_name deptName, e.first_name firstName, e.last_name lastName, de.from_date fromDate, de.to_date toDate FROM dept_emp de INNER JOIN employees e ON de.emp_no = e.emp_no INNER JOIN departments d ON de.dept_no = d.dept_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? OR d.dept_name LIKE ? ORDER BY de.emp_no ASC LIMIT ?, ?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, "%"+word+"%");
 		stmt.setString(2, "%"+word+"%");
-		stmt.setInt(3,beginRow);
-		stmt.setInt(4,ROW_PER_PAGE);
+		stmt.setString(3, "%"+word+"%");
+		stmt.setInt(4,beginRow);
+		stmt.setInt(5,ROW_PER_PAGE);
 	}
 
 	ResultSet rs = stmt.executeQuery();
