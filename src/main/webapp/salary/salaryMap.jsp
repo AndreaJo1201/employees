@@ -196,7 +196,7 @@
 					<div class="d-flex justify-content-between">
 					
 						<div>
-							<a href="<%=request.getContextPath()%>/salary/insertSalaryForm.jsp" class="btn btn-secondary text-white btn-lg text-end">게시글 작성</a>
+							<a href="<%=request.getContextPath()%>/salary/insertSalaryForm.jsp" class="btn btn-secondary text-white btn-lg text-end">신규 작성</a>
 						</div>
 					
 						<div>
